@@ -53,5 +53,19 @@ export class CombatGame {
     return message;
   }
 
-  
+  purchase(itemName) {
+    var addedItem = this.findItemByName(itemName)
+    this.playerCharacter.items.push(addedItem);
+    this.playerCharacter.credits -= addedItem.price;
+    return addedItem;
+  }
+
+  findItemByName(itemName) {
+    for (let itemIndex = 0; itemIndex < this.shopItems.length; itemIndex++){
+      const item = this.shopItems[itemIndex];
+      if (item.product == itemName) {
+        return item;
+      }
+    }
+  }
 }

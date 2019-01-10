@@ -7,6 +7,5 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 $(document).ready(function() {
     const newGame = new CombatGame(["Law Graduate", 8, 4]);
-    debugger;
     console.log(newGame);
 });

@@ -62,6 +62,12 @@ describe('CombatGame', function() {
     });
   });
 
+  describe('findItemByName', function() {
+    it('should take an item name (the Item.product) and return the item from the shop', function() {
+      expect(reusableCombatGame.findItemByName('hot coffee')).toEqual(reusableCombatGame.shopItems[0]);
+    });
+  });
+
   describe('purchase', function() {
     it('add the product to the player\'s items and decrease their credit', function() {
       reusableCombatGame.playerCharacter.credits += 5;
