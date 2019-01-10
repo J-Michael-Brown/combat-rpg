@@ -6,11 +6,13 @@ describe('CombatGame', function() {
   let reusableEnemy;
   let reusablePlayerArchetype;
   let reusableCombatGame;
+  let reusableItem;
 
   beforeEach(function() {
     reusableEnemy = new Enemy('Bed', 20, 1, "You found a $1 bill under your pillow.",[['sleep','warm covers', 10]]);
     reusablePlayerArchetype = ["Law Graduate", 8, 4];
     reusableCombatGame = new CombatGame(reusablePlayerArchetype);
+    reusableItem = new Item('hot coffee', [-30, 5, -5], 3);
   });
 
   describe('combatScenario', function() {
@@ -73,6 +75,18 @@ describe('CombatGame', function() {
       reusableCombatGame.playerCharacter.credits += 5;
       expect(reusableCombatGame.purchase('hot coffee')).toEqual(reusableCombatGame.shopItems[0]);
       expect(reusableCombatGame.playerCharacter.credits).toEqual(2);
+    });
+  });
+
+  describe('useItem', function() {
+    it('should use the item\'s effects', function() {
+      reusableCombatGame.playerCharacter.items.push(reusableItem);
+      reusableCombatGame.useItem(reusableItem, reusableEnemy);
+
+      expect(reusableCombatGame.playerCharacter.sleep).toEqual(0);
+      expect(reusableCombatGame.playerCharacter.sanity).toEqual(5);
+      expect(reusableEnemy.power).toEqual(15);
+      expect(reusableCombatGame.playerCharacter.items.length).toEqual(0);
     });
   });
 
