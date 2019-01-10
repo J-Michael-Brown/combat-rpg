@@ -1,4 +1,4 @@
-import { CombatGame } from './gameField';
+import { CombatGame } from './game-field';
 import './styles.css';
 import $ from 'jquery';
 import 'bootstrap';
