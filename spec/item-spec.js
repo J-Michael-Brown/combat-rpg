@@ -13,6 +13,5 @@ describe('Item', function() {
       expect(reusableItem.effects).toEqual([-30,5,-5]);
       expect(reusableItem.price).toEqual(3);
     });
-
   });
 });
