@@ -7,7 +7,7 @@ describe('Player', function(){
 
   beforeEach(function() {
     reusablePlayer = new Player("Law Student", 10, 2, []);
-    reusableItem = new Item('hot coffee', [-30, 5, -5], 3);
+    reusableItem = new Item('hot coffee', 3, -30, 5, -5);
   });
 
   describe('constructor', function(){

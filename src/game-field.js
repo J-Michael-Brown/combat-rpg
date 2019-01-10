@@ -1,33 +1,29 @@
-import { Player } from './player.js'
 import { Item } from './item.js'
 
 export class CombatGame {
-  constructor(archetype) {
-    this.playerCharacter = new Player(archetype[0], archetype[1], archetype[2])
-    this.shopItems = [new Item('hot coffee', [-30, 5, -5], 3)];
+  constructor(player, enemy) {
+    this.playerCharacter = player;
+    this.enemy = enemy;
+    this.shopItems = [new Item('hot coffee', 3, -30, 5, -5)];
   }
 
-  combatScenario(enemy) {
-    return([this.playerCharacter.sleep, this.playerCharacter.sanity, this.playerCharacter.focus, this.playerCharacter.items, this.playerCharacter.credits, enemy.title, enemy.power, enemy.credits]);
-  }
-
-  enemyAction(enemy){
-    const attack = enemy.attacks[Math.floor(Math.random()*100%enemy.attacks.length)];
+  enemyAction(){
+    const attack = this.enemy.attacks[Math.floor(Math.random()*100%this.enemy.attacks.length)];
     if (attack[0]=='sanity') {
       this.playerCharacter.sanity+=attack[2];
     } else if (attack[0]=='sleep'){
       this.playerCharacter.sleep+=attack[2];
     }
-    enemy.power-=3;
-    return (`the ${enemy.title} used ${attack[1]}! \n dealing ${attack[2]} ${attack[0]} damage!`);
+    this.enemy.power-=3;
+    return (`the ${this.enemy.title} used ${attack[1]}! \n dealing ${attack[2]} ${attack[0]} damage!`);
   }
 
-  defeatEnemy(enemy) {
-    this.playerCharacter.credits+=enemy.credits;
-    return (`You defeated the ${enemy.title}.\n ${enemy.creditsMessage}`);
+  defeatEnemy() {
+    this.playerCharacter.credits+=this.enemy.credits;
+    return (`You defeated the ${this.enemy.title}.\n ${this.enemy.creditsMessage}`);
   }
 
-  chooseAction(playerInput, enemy) {
+  chooseAction(playerInput) {
     let message = '';
     if (playerInput=='wake up') {
       this.playerCharacter.sleep-=10;
@@ -36,37 +32,35 @@ export class CombatGame {
       this.playerCharacter.sanity+=1;
       message = ('you blot out the unimaginable horror.');
     } else if (playerInput=='rush') {
-      enemy.power-=5;
+      this.enemy.power-=5;
       message = ('You rush the enemy along!');
     }
-    this.enemyAction(enemy);
+    this.enemyAction();
     if (this.playerCharacter.sleep>=100) {
       message += (' You have succumb to sleep.')
     } else if (this.playerCharacter.sanity<=-5) {
       message += (' You just can\'t take it anymore. You succumb to madness.');
-    } else if (enemy.power<=0) {
-      this.defeatEnemy(enemy);
-    } else {
-      this.combatScenario(enemy);
+    } else if (this.enemy.power<=0) {
+      this.defeatEnemy();
     }
 
     return message;
   }
 
-  useItem(item, enemy) {
+  useItem(item) {
     if (this.findItemByName(item.product, this.playerCharacter.items)) {
-      this.playerCharacter.sleep += item.effects[0];
+      this.playerCharacter.sleep += item.sleepEffect;
       if (this.playerCharacter.sleep < 0) {
         this.playerCharacter.sleep = 0;
       }
-      this.playerCharacter.sanity += item.effects[1];
+      this.playerCharacter.sanity += item.sanityEffect;
       if (this.playerCharacter.sanity < -5) {
         this.playerCharacter.sanity = -5;
       }
       if (this.playerCharacter.sanity > 5) {
         this.playerCharacter.sanity = 5;
       }
-      enemy.power+=item.effects[2];
+      this.enemy.power+=item.powerEffect;
       this.playerCharacter.removeItem(item);
     } else {
       return false;

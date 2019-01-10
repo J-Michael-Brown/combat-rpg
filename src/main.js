@@ -1,4 +1,6 @@
 import { CombatGame } from './game-field';
+import { Enemy } from './enemy.js';
+import { Player } from './player.js';
 import './styles.css';
 import $ from 'jquery';
 import 'bootstrap';
@@ -10,12 +12,22 @@ $(document).ready(function() {
     event.preventDefault();
     let newGame;
     const character = $('#start option:selected').val();
+    const bedEnemy = new Enemy('Bed', 20, 1, "You found a $1 bill under your pillow.",[['sleep','warm covers', 10]], bedEnemy);
+
     if (character == "lawyer") {
-      newGame = new CombatGame(["Law Graduate", 8, 2]);
+      const player = new Player("Law Graduate", 8, 2)
+      newGame = new CombatGame(player, bedEnemy);
+      console.log(player);
     } else if (character == "nurse") {
-      newGame = new CombatGame(["Nurse", 15, -3]);
+      const player = new Player("Nurse", 15, -3)
+      newGame = new CombatGame(player, bedEnemy);
+      console.log(player);
     }
     $('#start').hide();
+
+
+
+    $('#live-game #arena').show();
     console.log(character);
     console.log(newGame);
   });
