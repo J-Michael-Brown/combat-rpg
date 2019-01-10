@@ -53,6 +53,26 @@ export class CombatGame {
     return message;
   }
 
+  useItem(item, enemy) {
+    if (this.findItemByName(item.product, this.playerCharacter.items)) {
+      this.playerCharacter.sleep += item.effects[0];
+      if (this.playerCharacter.sleep < 0) {
+        this.playerCharacter.sleep = 0;
+      }
+      this.playerCharacter.sanity += item.effects[1];
+      if (this.playerCharacter.sanity < -5) {
+        this.playerCharacter.sanity = -5;
+      }
+      if (this.playerCharacter.sanity > 5) {
+        this.playerCharacter.sanity = 5;
+      }
+      enemy.power+=item.effects[2];
+      this.playerCharacter.removeItem(item);
+    } else {
+      return false;
+    }
+  }
+
   purchase(itemName) {
     var addedItem = this.findItemByName(itemName)
     this.playerCharacter.items.push(addedItem);
@@ -60,12 +80,13 @@ export class CombatGame {
     return addedItem;
   }
 
-  findItemByName(itemName) {
-    for (let itemIndex = 0; itemIndex < this.shopItems.length; itemIndex++){
-      const item = this.shopItems[itemIndex];
+  findItemByName(itemName, itemArray = this.shopItems) {
+    for (let itemIndex = 0; itemIndex < itemArray.length; itemIndex++){
+      const item = itemArray[itemIndex];
       if (item.product == itemName) {
         return item;
       }
     }
+    return false;
   }
 }
