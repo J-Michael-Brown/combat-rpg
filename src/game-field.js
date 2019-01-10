@@ -1,10 +1,10 @@
 import { Player } from './player.js'
-
+import { Item } from './item.js'
 
 export class CombatGame {
   constructor(archetype) {
     this.playerCharacter = new Player(archetype[0], archetype[1], archetype[2])
-    // this.shopItems = [new Item('hot coffee', [-30, 5, -5], 3)];
+    this.shopItems = [new Item('hot coffee', [-30, 5, -5], 3)];
   }
 
   combatScenario(enemy) {
@@ -52,4 +52,6 @@ export class CombatGame {
 
     return message;
   }
+
+  
 }

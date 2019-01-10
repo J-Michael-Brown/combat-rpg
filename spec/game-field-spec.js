@@ -1,5 +1,6 @@
 import { CombatGame } from './../src/game-field.js'
 import { Enemy } from './../src/enemy.js'
+import { Item } from './../src/item.js'
 
 describe('CombatGame', function() {
   let reusableEnemy;
@@ -57,7 +58,15 @@ describe('CombatGame', function() {
 
   describe('shopItems', function() {
     it('should return available shop items and associated prices', function() {
-      expect(reusableCombatGame.shopItems[0].instanceof(Item)).toEqual(true);
+      expect(reusableCombatGame.shopItems[0] instanceof Item).toEqual(true);
+    });
+  });
+
+  describe('purchase', function() {
+    it('add the product to the player\'s items and decrease their credit', function() {
+      reusableCombatGame.playerCharacter.credits += 5;
+      expect(reusableCombatGame.purchase('hot coffee')).toEqual(reusableCombatGame.shopItems[0]);
+      expect(reusableCombatGame.playerCharacter.credits).toEqual(2);
     });
   });
 
