@@ -17,3 +17,8 @@ body {
 #live-game {
   display: none;
 }
+
+.combat {
+  padding: 20px;
+  background-color: #DCDCDC;
+}

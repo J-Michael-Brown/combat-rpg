@@ -17,4 +17,8 @@ export class Player {
     }
     return false;
   }
+
+  isAlive() {
+    return (this.sleep<100 && this.sanity>=-5);
+  }
 }

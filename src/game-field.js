@@ -20,7 +20,7 @@ export class CombatGame {
 
   defeatEnemy() {
     this.playerCharacter.credits+=this.enemy.credits;
-    return (`You defeated the ${this.enemy.title}.\n ${this.enemy.creditsMessage}`);
+    return (` You defeated the ${this.enemy.title}.\n ${this.enemy.creditsMessage}`);
   }
 
   chooseAction(playerInput) {
@@ -34,6 +34,10 @@ export class CombatGame {
     } else if (playerInput=='rush') {
       this.enemy.power-=5;
       message = ('You rush the enemy along!');
+    } else if (playerInput.includes('use')) {
+      const productName = playerInput.substring(4);
+      const item = this.findItemByName(productName, this.playerCharacter.items);
+      this.useItem(item);
     }
     this.enemyAction();
     if (this.playerCharacter.sleep>=100) {
@@ -41,29 +45,35 @@ export class CombatGame {
     } else if (this.playerCharacter.sanity<=-5) {
       message += (' You just can\'t take it anymore. You succumb to madness.');
     } else if (this.enemy.power<=0) {
-      this.defeatEnemy();
+      message += this.defeatEnemy();
     }
-
     return message;
   }
 
   useItem(item) {
     if (this.findItemByName(item.product, this.playerCharacter.items)) {
       this.playerCharacter.sleep += item.sleepEffect;
-      if (this.playerCharacter.sleep < 0) {
-        this.playerCharacter.sleep = 0;
-      }
       this.playerCharacter.sanity += item.sanityEffect;
-      if (this.playerCharacter.sanity < -5) {
-        this.playerCharacter.sanity = -5;
-      }
-      if (this.playerCharacter.sanity > 5) {
-        this.playerCharacter.sanity = 5;
-      }
       this.enemy.power+=item.powerEffect;
       this.playerCharacter.removeItem(item);
+      this.limitPlayerStats();
     } else {
       return false;
+    }
+  }
+
+  limitPlayerStats(){
+    if (this.playerCharacter.sanity < -5) {
+      this.playerCharacter.sanity = -5;
+    }
+    if (this.playerCharacter.sanity > 5) {
+      this.playerCharacter.sanity = 5;
+    }
+    if (this.playerCharacter.sleep < 0) {
+      this.playerCharacter.sleep = 0;
+    }
+    if (this.playerCharacter.sleep > 100) {
+      this.playerCharacter.sleep = 100;
     }
   }
 

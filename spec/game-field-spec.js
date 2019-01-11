@@ -25,7 +25,7 @@ describe('CombatGame', function() {
 
   describe('defeatEnemy', function() {
     it('give the player the enemy\'s credits and return a message', function() {
-      expect(reusableCombatGame.defeatEnemy()).toEqual("You defeated the Bed.\n You found a $1 bill under your pillow.");
+      expect(reusableCombatGame.defeatEnemy()).toEqual(" You defeated the Bed.\n You found a $1 bill under your pillow.");
       expect(reusableCombatGame.playerCharacter.credits).toEqual(1);
     });
   });

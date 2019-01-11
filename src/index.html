@@ -19,34 +19,55 @@
 
       <div id="live-game">
         <div id="arena">
-          <p id="player-class"></p>
-          <p id="sleep-level"></p>
-          <p id="sanity-level"></p>
-          <p id="items"></p>
-
-          <p id="enemy-title"></p>
-          <p id="enemy-power"></p>
+          <div class="combat">
+            <h1>Combat Scenario</h1>
+            <h2>Player</h2>
+            <p id="player-class"></p>
+            <p id="sleep-level"></p>
+            <p id="sanity-level"></p>
+            <p id="items"></p>
+            <h2>Enemy</h2>
+            <p id="enemy-title"></p>
+            <p id="enemy-power"></p>
+          </div>
 
 
           <p id="player-attack"></p>
           <p id="enemy-attack"></p>
         </div>
 
+        <div id="combat-result">
+          <p id="result-message"></p>
+        </div>
+
         <div id="result-screen">
           <p id="cedit-message"></p>
         </div>
 
-        <div id="shop">
-
-        </div>
+        <form id="shop">
+          <h2>Welcome to Grab 'n' Go Market</h2>
+          <label>Choose item</label>
+          <div class="form-group">
+            <select class="form-control" id="store-options">
+            </select>
+          </div>
+          <button type="submit" name="action">Buy</button>
+        </form>
 
         <form id="player-input">
-          <input type="text">
+          <label>Choose Action</label>
+          <div class="form-group">
+            <select class="form-control" id="player-options">
+              <option value="wake up">Wake up</option>
+              <option value="blot">Blot out unimaginable horror</option>
+              <option value="rush">Rush Enemy</option>
+            </select>
+          </div>
           <button type="submit" name="action">GO</button>
         </form>
 
       </div>
-
+      <div id="game-end"></div>
       <canvas id="canvas" width="1080" height="720"></canvas>
     </div>
   </body>
