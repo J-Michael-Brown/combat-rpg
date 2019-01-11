@@ -1,4 +1,4 @@
-import { Item } from './item.js'
+import { Item } from './item.js';
 
 export class CombatGame {
   constructor(player, enemy) {
@@ -41,7 +41,7 @@ export class CombatGame {
     }
     this.enemyAction();
     if (this.playerCharacter.sleep>=100) {
-      message += (' You have succumb to sleep.')
+      message += (' You have succumb to sleep.');
     } else if (this.playerCharacter.sanity<=-5) {
       message += (' You just can\'t take it anymore. You succumb to madness.');
     } else if (this.enemy.power<=0) {
@@ -78,7 +78,7 @@ export class CombatGame {
   }
 
   purchase(itemName) {
-    var addedItem = this.findItemByName(itemName)
+    var addedItem = this.findItemByName(itemName);
     this.playerCharacter.items.push(addedItem);
     this.playerCharacter.credits -= addedItem.price;
     return addedItem;
